@@ -1,0 +1,52 @@
+<div class="table-data">
+				<div class="order">
+					<div class="head">
+						<h3>Recent Orders</h3>
+						<i class='bx bx-search' ></i>
+						<i class='bx bx-filter' ></i>
+					</div>
+					<table>
+						<thead>
+							<tr>
+								<th>raison social</th>
+								<th>Adresse</th>
+								<th>Telephone</th>
+								<th>Responsable</th>
+								<th>Action</th>
+							</tr>
+						</thead>
+						<tbody>
+                                <?php 
+                                    $query = "SELECT * FROM etablissement";
+                                    $query_run = mysqli_query($con, $query);
+
+                                    if(mysqli_num_rows($query_run) > 0)
+                                    {
+                                        foreach($query_run as $etablissement)
+                                        {
+                                            ?>
+                                            <tr>
+                                                <td><?= $etablissement['raison_social']; ?></td>
+                                                <td><?= $etablissement['adresse']; ?></td>
+                                                <td><?= $etablissement['telephone']; ?></td>
+                                                <td><?= $etablissement['responsable']; ?></td>
+                                               
+                                                <td>
+                                                    
+                                                    <a href="etablissement-edit.php?id=<?= $etablissement['id']; ?>" class="btn btn-success btn-sm">Edit</a>
+                                                    <form action="code.php" method="POST" class="d-inline">
+                                                        <button type="submit" name="delete_etablissement" value="<?=$etablissement['id'];?>" class="btn btn-danger btn-sm">Delete</button>
+                                                    </form>
+                                                </td>
+                                            </tr>
+                                            <?php
+                                        }
+                                    }
+                                    else
+                                    {
+                                        echo "<h5> No Record Found </h5>";
+                                    }
+                                ?>
+                                
+                            </tbody>
+					</table>
